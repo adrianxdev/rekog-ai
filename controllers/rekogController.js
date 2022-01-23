@@ -86,11 +86,22 @@ module.exports = function (app) {
 				rekog.detectLabels(params, function (err, data) {
 					if (err) reject(err)
 					else {
+						console.log("Duke Energy");
+
 						var str = ''
 						if (ui.debuginfo) console.log('==> rekog label data is ', JSON.stringify(data, null, 3))
 
 						for (i = 0; i < data.Labels.length; i++) {
-							str += data.Labels[i].Name + ' - Confidence ' + data.Labels[i].Confidence.toFixed(2) + '%\n'
+							if((data.Labels[i].Name).includes("Utility")) //and check high confidence ... handle case.
+							{
+								console.log("FOUND: Duke Energy");
+str = "FOUND: Duke Energy";
+resolve(str) //return results once we find a match otherwise it'll keep looking at all of the tags
+							}else{
+								str = "No match found. Try another disaster recovery photo.";
+
+							}
+						//	str += data.Labels[i].Name + ' - Confidence ' + data.Labels[i].Confidence.toFixed(2) + '%\n'
 						}
 						resolve(str)
 					}
