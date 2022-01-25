@@ -1,10 +1,34 @@
 <div id="file-picker" class="padded">
 
+
+    <input type="file" accept="image/*" onchange="loadFile(event)">
+    <img id="output"/>
+    <script>
+        
+      var loadFile = function(event) {
+        var output = document.getElementById('output');
+        output.src = URL.createObjectURL(event.target.files[0]);
+        output.onload = function() {
+          URL.revokeObjectURL(output.src) // free memory
+        alert(output.src);
+        var fileplaceholder = document.getElementById('output123');
+    fileplaceholder.value=output.src
+        
+        
+        }
+      };
+    
+    
+    
+    
+    </script>
+
 <form method="POST" action="/rekog">
     <label>Anyone can submit a photo of disaster damage. We'll route it to the right place:</label>
-    <input class="field" id="filename" type="file" name="filename" accept=".png,.jpg, jpeg" required>
-    <input type="submit" value="Scan Image">
+   <!-- <input class="field" id="filename" type="file" name="filename" accept=".png,.jpg, jpeg" >-->
+<input id="output123" name="output123" value = "HI">
+    <input type="submit" value="Scan Image1">
+    
+
 </form>
 </div>
-
-

@@ -4,6 +4,7 @@ module.exports = function (app) {
 	// load the AWS SDK
 	var aws = require('aws-sdk')
 	var fs = require('fs')
+	var request = require('request')
 
 	// require Helper functions
 	var helper = require('./helpers')
@@ -44,32 +45,71 @@ module.exports = function (app) {
 	// process image
 	app.post('/rekog', function (req, res) {
 
+	console.log("body:"+req.body) ;   
+    
+
+
 		ui.data.filename = req.body.filename
 		ui.flow.activateDiv = ui.flow.activateDiv || 'label-result-div'
 		ui.flow.activateButton = ui.flow.activateButton || 'label-button'
+		console.log("herheer"+ req.body.output123)
 
 		var loadImage = function () {
 			return new Promise(function (resolve, reject) {
 
 				var fs = require('fs')
-				var file = __dirname + '/../images/' + req.body.filename
+				var file = req.body.filename
+				var file2 = req.body.output123
 
-				if (ui.debuginfo) console.log('==> reading image from file ' + file)
+				if (ui.debuginfo) console.log('==> reading image from file ' + file + file2)
+				
+				console.log("file2:" + file2);
+
+				var myBody = {
+					Image: file2
+				  };
+
+				  console.log("body: " + myBody)
+				  request.post({url:'http://ec2-54-224-68-136.compute-1.amazonaws.com:8080/api/predict', FormData: myBody}, function optionalCallback(err, httpResponse, body) {
+					if (err) {
+					  return console.error('upload failed:', err);
+				     
+					}
+					console.log('Upload successful!  Server responded with:', body);
+				  });
+
+
+
 
 				// this will run async
-				fs.readFile(file, 'base64', (err, data) => {
+				fs.readFile(file2, 'base64', (err, data) => {
 
 					// file error?
 					if (err) reject(err)
 					else {
+
+
+						
+						
+
+
+
+//DO WHATEVER REKOGNITION CODE WAS DOING BEFORE
+
+
 						// create a new base64 buffer out of the string passed to us by fs.readFile()
 						buffer = new Buffer(data, 'base64')
 						resolve(buffer)
+
+
+
+
 					}
 				})
 			})
 
 		}
+
 
 		// detect image labels
 		var detectLabels = function (buffer) {
