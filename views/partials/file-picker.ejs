@@ -1,7 +1,36 @@
+
+
+<p>Click to grab your location:</p>
+
+<button onclick="getLocation()">Click to add your location to the report</button>
+
+<p id="demo"></p>
+
+<script>
+var x = document.getElementById("demo");
+
+function getLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(showPosition);
+  } else { 
+    x.innerHTML = "Geolocation is not supported by this browser.";
+  }
+}
+
+function showPosition(position) {
+  x.innerHTML = "Latitude: " + position.coords.latitude + 
+  "<br>Longitude: " + position.coords.longitude;
+}	
+</script>
+
+
+
 <div id="file-picker" class="padded">
 
+    <form method="POST" action="http://ec2-54-224-68-136.compute-1.amazonaws.com:8080/api/predict" enctype="multipart/form-data">
 
-    <input type="file" accept="image/*" onchange="loadFile(event)">
+    <input name="Image" id="Image" type="file" accept="image/*" onchange="loadFile(event)">
+    <br>
     <img id="output"/>
     <script>
         
@@ -10,7 +39,7 @@
         output.src = URL.createObjectURL(event.target.files[0]);
         output.onload = function() {
           URL.revokeObjectURL(output.src) // free memory
-        alert(output.src);
+       // alert(output.src);
         var fileplaceholder = document.getElementById('output123');
     fileplaceholder.value=output.src
         
@@ -23,12 +52,9 @@
     
     </script>
 
-<form method="POST" action="/rekog">
-    <label>Anyone can submit a photo of disaster damage. We'll route it to the right place:</label>
-   <!-- <input class="field" id="filename" type="file" name="filename" accept=".png,.jpg, jpeg" >-->
-<input id="output123" name="output123" value = "HI">
-    <input type="submit" value="Scan Image1">
-    
+<input type="submit" value="Get Prediciton">
+
 
 </form>
+
 </div>
