@@ -37,22 +37,45 @@ function showPosition(position) {
       var loadFile = function(event) {
         var output = document.getElementById('output');
         output.src = URL.createObjectURL(event.target.files[0]);
-        output.onload = function() {
-          URL.revokeObjectURL(output.src) // free memory
+ 
+ 
+        const formData  = new FormData();
+
+
+  formData.append('Image', event.target.files[0]);
+
+
+  
+        
+        fetch('http://ec2-54-224-68-136.compute-1.amazonaws.com:8080/api/predict', { 
+	method: "POST" ,
+	body: formData 
+}) 
+.then(resp => resp.json()) 
+//we admit the server respond with the saved object: { id: 1, name:"myDummyName" } 
+.then(json => console.log("Response: " + json)) 
+.catch(err => console.log("An error occured :" + err)); 
+
+ 
+ 
+ 
+ 
+      //  output.onload = function() {
+      //    URL.revokeObjectURL(output.src) // free memory
        // alert(output.src);
-        var fileplaceholder = document.getElementById('output123');
-    fileplaceholder.value=output.src
         
-        
-        }
-      };
+      //  }
+      
+    
+    
+    };
     
     
     
     
     </script>
-
-<input type="submit" value="Get Prediciton">
+<br>
+<input type="submit" value="Submit Disaster Recovery Incident">
 
 
 </form>
