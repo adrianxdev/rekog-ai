@@ -1,5 +1,5 @@
 
-
+<h1> WHERE?</h1>
 <p>Click to grab your location:</p>
 
 <button onclick="getLocation()">Click to add your location to the report</button>
@@ -10,6 +10,8 @@
 var x = document.getElementById("demo");
 
 function getLocation() {
+    x.innerHTML = "We're looking for you. Please wait..."; 
+
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(showPosition);
   } else { 
@@ -24,6 +26,8 @@ function showPosition(position) {
 </script>
 
 
+<h1>WHAT?</h1>
+<p>Click to take a photo:</p>
 
 <div id="file-picker" class="padded">
 
@@ -74,10 +78,22 @@ function showPosition(position) {
     
     
     </script>
-<br>
-<input type="submit" value="Submit Disaster Recovery Incident">
 
 
 </form>
 
-</div>
+
+<h1>WHO?</h1>
+<p>Click to find the appropriate recoery response team:</p>
+
+<input type="submit" value="Predict a match">
+
+
+
+
+
+<h1>SUBMIT!</h1>
+<p>Click to submit the disaster report to the appopriate team:</p>
+
+<input type="submit" value="SUBMIT IT">
+<div>
