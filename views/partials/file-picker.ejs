@@ -57,7 +57,16 @@ function showPosition(position) {
 }) 
 .then(resp => resp.json()) 
 //we admit the server respond with the saved object: { id: 1, name:"myDummyName" } 
-.then(json => console.log("Response: " + json)) 
+.then(json => {console.log("Response: " + json)
+
+//add a mapping table from predicion to first responder team (Name and email)
+
+
+
+    var p = document.getElementById("prediction");
+p.innerHTML=json
+    
+})
 .catch(err => console.log("An error occured :" + err)); 
 
  
@@ -87,13 +96,18 @@ function showPosition(position) {
 <p>Click to find the appropriate recoery response team:</p>
 
 <input type="submit" value="Predict a match">
-
+<div id="prediction"></div>
 
 
 
 
 <h1>SUBMIT!</h1>
-<p>Click to submit the disaster report to the appopriate team:</p>
+<p>Click to submit the disaster report to the appropriate team:</p>
 
-<input type="submit" value="SUBMIT IT">
+<!--<input type="submit" value="SUBMIT IT">-->
+
+<!-- use the email based on the prediction-->
+<!-- include the image and location -->
+<button onclick="location.href='mailto:xyz@yourapplicationdomain.com?subject=TEST REPORT&body=THIS IS ONLY A TEST OR THIS WOULD HAVE REAL INFO TO REPORT!'">SUBMIT REPORT</button>
+
 <div>
